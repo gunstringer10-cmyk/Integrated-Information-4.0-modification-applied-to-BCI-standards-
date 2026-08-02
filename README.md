@@ -550,7 +550,6 @@ for m in Omega_M:
 sum_phi_s_T_all_e_T_all_c_s_theta=0
 for theta in Theta_big_MZ:
     k=len(theta)
-    print(f"Часть {i+1}: Si={Si} (длина {len(Si)}), Xi={Xi} (длина {len(Xi)})")
     sum_phi_s_T_all_e_T_all_c_s_theta=sum(len(Mi)*len(Zi) for Mi, Zi in theta)
 print('phi_s_T_all_e_T_all_c_s_theta= ', sum_phi_s_T_all_e_T_all_c_s_theta)
 
@@ -616,7 +615,6 @@ for theta in Theta_big_MZ:
 
 phi_max_value = np.max(list(phi_dict.values())) if phi_dict else np.max(phi_val)
 
-# theta' — argmin отношения φ/max(φ)
 if phi_max_value > 0 and phi_dict:
     theta_all = min(phi_dict, key=lambda t: np.max(phi_dict[t]) / phi_max_value)
 else:
