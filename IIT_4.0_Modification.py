@@ -15,9 +15,9 @@ for i in range(set_number):
 S=set(random.sample(range(set_number), random.randint(1, set_number-1)))
 print('S= ', S)
 W=set(range(set_number))-S
-print('W= ', W) # разность множеств индексов
-s_size = random.randint(1, set_number - 1)  # размер подсистемы: 1 или 2
-s = np.array([u[i] for i in sorted(S)])  # вектор
+print('W= ', W) 
+s_size = random.randint(1, set_number - 1)  
+s = np.array([u[i] for i in sorted(S)])  
 print('s= ', s)
 w = np.array([u[i] for i in sorted(W)])
 print('w= ', w)
@@ -29,21 +29,21 @@ print('si= ', si)
 m_size = random.randint(2, len(S)) if len(S) >= 2 else 1
 M = set(random.sample(list(S), m_size))
 print('M= ', M)
-m = np.array([u[i] for i in sorted(M)])# Состояния механизма m
+m = np.array([u[i] for i in sorted(M)])
 print('m= ', m)
 for i in M:
-    Mi = {i}      # Локальное множество узла механизма
+    Mi = {i}     
     mi = m[list(sorted(M)).index(i)]  if len(m)>1 else m
-    print('mi= ', mi)# Локальное состояние узла механизма
+    print('mi= ', mi)
 z_size = random.randint(2, len(S)) if len(S) >= 2 else 1
 Z = set(random.sample(list(S), z_size))
 print('Z= ', Z)
 z = np.array([u[i] for i in sorted(Z)])
 print('z= ', z)
 for i in Z:
-    Zi = {i}      # Локальное множество узла пурвита
+    Zi = {i}      
     zi = z[list(sorted(Z)).index(i)]  if len(z)>1 else z
-    print('z[i]= ', zi)# Локальное состояние узла пурвита
+    print('z[i]= ', zi)
 z_hat=np.array(z).flatten()
 print('z_hat= ', z_hat) 
 S_hat=S
@@ -117,27 +117,19 @@ if N/10 >0:
     scale_factor = 10.0 ** order_of_magnitude
 else:
     scale_factor = 1.0
-# 1. Полный объем данных, проходящих через используемые каналы (бит/сек)
 total_bits_per_sec = fs * scale_factor * bits * N
 
-# 2. Энергетическая стоимость передачи: сколько милливатт уходит на 1 бит/сек
-# (чистая физическая метрика: мощность / поток данных)
 if total_bits_per_sec > 0:
     energy_per_bit = power / total_bits_per_sec
 else:
     energy_per_bit = 0.0
 
-# 3. Учет физического веса через удельную плотность на канал
 weight_factor = wt / max(N, 1)
 
-# 4. Интегральная стоимость системы (чем меньше этот показатель, тем эффективнее чип)
 system_cost = energy_per_bit * weight_factor
 
-# 5. Естественное преобразование стоимости в эффективность (обратная величина):
-# Чем ниже издержки на бит и вес, тем выше итоговый коэффициент e_t,
-# который за счет инверсии естественно стремится к диапазону [0, 1)
 if system_cost > 0:
-    e_t = 1.0 / (1.0 + system_cost * 1e6)  # масштабный множитель здесь отражает физическую размерность мВт/бит
+    e_t = 1.0 / (1.0 + system_cost * 1e6) 
 else:
     e_t = 0.0
 print('e_t = ', e_t)
@@ -181,8 +173,8 @@ for x in Omega_X:
         mx = np.concatenate([m, x])
         print('mx= ', mx)
     b_weights = np.array([b_list.get(k, 1) for k in range(len(mx))])
-    bias = np.random.uniform(0, 1) # bias — это скалярное смещение для узла zi
-    signal = (np.dot(b_weights, mx) * zi) + bias# Скалярный суммарный потенциал воздействия  # На выходе 1 число!
+    bias = np.random.uniform(0, 1) 
+    signal = (np.dot(b_weights, mx) * zi) + bias 
     tpm_prob = 1 / (1 + np.exp(-k * signal))
     tpm_bci = (P_signal * tpm_prob) + (p_noise_val*0.5)
     print('tpm bci= ', tpm_bci)
@@ -208,8 +200,8 @@ for s_bar in Omega_S:
         sw = np.concatenate([np.atleast_1d(s), np.atleast_1d(w)])
         print('sw= ', sw)
     b_weights = np.array([b_list.get(k, 1) for k in range(len(sw))])
-    bias = np.random.uniform(0, 1) # bias — это скалярное смещение для узла zi
-    signal = (np.dot(b_weights, sw) * np.array(s_bar)) + bias# Скалярный суммарный потенциал воздействия  # На выходе 1 число!
+    bias = np.random.uniform(0, 1) 
+    signal = (np.dot(b_weights, sw) * np.array(s_bar)) + bias
     T_e = 1 / (1 + np.exp(-k * signal))
     T_e_bci = (P_signal * T_e) + (p_noise_val*0.5)
     print('Te bci= ', T_e_bci)
@@ -631,7 +623,6 @@ for theta in Theta_big_MZ:
 
 phi_max_value = np.max(list(phi_dict.values())) if phi_dict else np.max(phi_val)
 
-# theta' — argmin отношения φ/max(φ)
 if phi_max_value > 0 and phi_dict:
     theta_all = min(phi_dict, key=lambda t: np.max(phi_dict[t]) / phi_max_value)
 else:
@@ -709,7 +700,7 @@ print('z_ALL =', z_ALL)
 d_m=(m, z_ALL, float(phi_d_m))
 print('d_m= ', d_m)
 
-s_c_all_T_c_s = np.atleast_1d(s_c_all_T_c_s)  # превращаем в массив
+s_c_all_T_c_s = np.atleast_1d(s_c_all_T_c_s)  
 s_e_all_T_e_s = np.atleast_1d(s_e_all_T_e_s)
 D_T_e_T_c_s=[]
 for z_c_ALL_m in s_c_all_T_c_s:
@@ -724,7 +715,7 @@ for z_c_ALL_m in s_c_all_T_c_s:
                     d_new = (m, (z_c_ALL_m, z_e_ALL_m), float(phi_d_m))
                     D_T_e_T_c_s.append(d_new)
                     print('D_T_e_T_c_s= ', D_T_e_T_c_s)
-d_fat = D_T_e_T_c_s  # сам список различий
+d_fat = D_T_e_T_c_s  
 print('d_fat= ', d_fat)
 print('|d_fat|= ', len(d_fat)) 
 
@@ -762,7 +753,7 @@ print('f_fat_d= ', f_fat_d)
 
 o_ALL_union = set()
 for d in d_fat:
-    m_d, (z_c_ALL_d, z_e_ALL_d), phi_d_val = d  # распаковываем d здесь
+    m_d, (z_c_ALL_d, z_e_ALL_d), phi_d_val = d  
     for f in f_fat_d:
         z_combo, o_ALL_f = f
         o_ALL_union = o_ALL_union | o_ALL_f
